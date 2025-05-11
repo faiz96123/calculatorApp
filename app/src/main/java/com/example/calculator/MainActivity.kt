@@ -1,4 +1,5 @@
 package com.example.calculator
+
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnClear).setOnClickListener { clearInput() }
         findViewById<Button>(R.id.btnDelete).setOnClickListener { deleteLast() }
         findViewById<Button>(R.id.btnEquals).setOnClickListener { calculateResult() }
+        findViewById<Button>(R.id.btnPercent).setOnClickListener { calculatePercentage() } // Added Percentage Button Listener
     }
 
     private fun appendDigit(digit: String) {
@@ -88,6 +90,22 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             tvResult.text = "Error"
             currentInput = ""
+        }
+    }
+
+    // New Percentage Calculation Function
+    private fun calculatePercentage() {
+        if (lastNumeric) {
+            try {
+                val value = currentInput.toDouble()
+                val result = value / 100
+                tvResult.text = result.toString()
+                currentInput = result.toString()
+                lastDot = currentInput.contains(".")
+            } catch (e: Exception) {
+                tvResult.text = "Error"
+                currentInput = ""
+            }
         }
     }
 
